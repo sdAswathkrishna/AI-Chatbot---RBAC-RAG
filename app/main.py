@@ -71,6 +71,7 @@ def test(user=Depends(authenticate)):
 @app.post("/chat")
 def query(user=Depends(authenticate), message: str = "Hello"):
     role = user["role"]
+    print("User role:", role)
     docs = search_documents(message, role)
     if not docs:
         return {"response": "Sorry, no relevant documents were found."}

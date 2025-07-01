@@ -187,17 +187,13 @@ def get_collection_stats():
     try:
         collection_info = client.get_collection(collection_name=COLLECTION_NAME)
         
-        # Get some sample points to analyze content
-        # Use a simple query to get sample points
-        sample_points = client.query_points(
+        # Use scroll to get a random sample of points
+        sample_points, _ = client.scroll(
             collection_name=COLLECTION_NAME,
-            query=[0] * embedding_model.get_sentence_embedding_dimension(),
             limit=100,
-            with_payload=True,
-            score_threshold=0.0  # Get all points regardless of score
-        ).points
+            with_payload=True
+        )
         
-        # Analyze role distribution
         role_counts = {}
         file_type_counts = {}
         total_words = 0
@@ -224,7 +220,8 @@ def get_collection_stats():
     except Exception as e:
         logger.error(f"Error getting collection stats: {str(e)}")
         return {"error": str(e)}
-
+    
+    
 
 def delete_collection():
     """Delete the collection."""
