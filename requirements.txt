@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+qdrant-client
+sentence-transformers
+pandas
+python-dotenv
+streamlit
+httpx
+openai
+markdown
+sqlalchemy
+psycopg2-binary
+google-genai
